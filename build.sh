@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup networking
+#
 dhcpcd host0
 
 # Update packages

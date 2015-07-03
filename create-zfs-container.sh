@@ -17,6 +17,8 @@ if [[ $POOL == "" ]]; then
    exit 1
 fi
 
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 TIMESTAMP=$(date +%s)
 RUN_SHA=$(echo -n "${pkgname}@${TIMESTAMP}" | shasum | awk '{print $1}')
 
@@ -50,8 +52,10 @@ EOT
 cat /etc/resolv.conf > ${MOUNT_DIR}/etc/resolv.conf
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > ${MOUNT_DIR}/etc/sudoers
 
-# Make sure the build script is executable
-chmod 755 ${MOUNT_DIR}/build.sh
+# Setup build script
+cp ${SCRIPT_DIR}/build.sh ${MOUNT_DIR}/build.sh || exit 1
+chmod 755 ${MOUNT_DIR}/build.sh || exit 1
+
 systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman/pkg --bind=$(pwd):/build --network-veth /build.sh
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
