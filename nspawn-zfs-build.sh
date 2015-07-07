@@ -56,7 +56,6 @@ echo "%wheel ALL=(ALL) NOPASSWD: ALL" > ${MOUNT_DIR}/etc/sudoers
 cp ${SCRIPT_DIR}/build.sh ${MOUNT_DIR}/build.sh || exit 1
 chmod 755 ${MOUNT_DIR}/build.sh || exit 1
 
-systemctl start systemd-networkd
 systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman/pkg --bind=$(pwd):/build --network-veth /build.sh
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
