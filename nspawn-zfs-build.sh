@@ -62,7 +62,3 @@ systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman/pkg --bind=$(pw
 echo " ==> destroy ${TARGET_FILESYSTEM}"
 zfs destroy -r ${TARGET_FILESYSTEM} || exit 1
 rmdir ${MOUNT_DIR}
-
-# rm /atomica/arch/x86_64/${pkgname}*.pkg.tar.xz || true
-# cp ${pkgname}*-any.pkg.tar.xz /atomica/arch/x86_64/ || true
-# cp ${pkgname}*-x86_64.pkg.tar.xz /atomica/arch/x86_64/ || true
