@@ -57,6 +57,9 @@ cp ${SCRIPT_DIR}/build.sh ${MOUNT_DIR}/build.sh || exit 1
 chmod 755 ${MOUNT_DIR}/build.sh || exit 1
 
 systemctl start systemd-networkd
+if [[ "${PRE_INSTALL_PACKAGES}" != "" ]]; then
+	systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman/pkg --bind=$(pwd):/build --network-veth pacman -Sy ${PRE_INSTALL_PACKAGES}
+fi
 systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman/pkg --bind=$(pwd):/build --network-veth /build.sh
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
