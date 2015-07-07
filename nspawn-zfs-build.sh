@@ -20,7 +20,7 @@ fi
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 TIMESTAMP=$(date +%s)
-RUN_SHA=$(echo -n "${pkgname}@${TIMESTAMP}" | shasum | awk '{print $1}')
+RUN_SHA=$(echo -n "${pkgname}@${TIMESTAMP}" | sha256sum | awk '{print $1}')
 
 TARGET_FILESYSTEM="${POOL}/serotina/packages/${pkgname}/${RUN_SHA}"
 
