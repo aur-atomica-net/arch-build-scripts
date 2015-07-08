@@ -13,11 +13,13 @@ chown -R build:users /build
 cd /build
 
 if [[ -f ./pre_build.sh ]]; then
+    chmod 755 ./pre_build.sh
     ./pre_build.sh || exit 1
 fi
 
 sudo -u build makepkg --force --cleanbuild --noconfirm --syncdeps || exit 1
 
 if [[ -f ./post_build.sh ]]; then
+    chmod 755 ./post_build.sh
     ./post_build.sh || exit 1
 fi
