@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# This might not be required in the future
 dhcpcd host0
 
 pacman --sync --sysupgrade --refresh --noconfirm
