@@ -56,9 +56,10 @@ echo "%wheel ALL=(ALL) NOPASSWD: ALL" > ${MOUNT_DIR}/etc/sudoers
 cp ${SCRIPT_DIR}/build.sh ${MOUNT_DIR}/build.sh || exit 1
 chmod 755 ${MOUNT_DIR}/build.sh || exit 1
 
-# We're going to live dangerously and bind /var/cache so that things like pacman
-# (and maven if -Dmaven.repo.local=/tmp is set) can reuse assets across builds
-systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache --bind=$(pwd):/build --network-veth /bin/bash
+# Persistent cache directory which will be set as the build users home directory
+mkdir -p /var/cache/build
+
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth /build.sh
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
 zfs destroy -r ${TARGET_FILESYSTEM} || exit 1
