@@ -17,12 +17,11 @@ if [[ $POOL == "" ]]; then
    exit 1
 fi
 
-SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-
 TIMESTAMP=$(date +%s)
 RUN_SHA=$(echo -n "${pkgname}@${TIMESTAMP}" | sha256sum | awk '{print $1}')
-
 TARGET_FILESYSTEM="${POOL}/serotina/packages/${pkgname}/${RUN_SHA}"
+
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 echo ""
 echo " ==> Package name:       ${pkgname}"
@@ -59,7 +58,7 @@ chmod 755 ${MOUNT_DIR}/build.sh || exit 1
 # Persistent cache directory which will be set as the build users home directory
 mkdir -p /var/cache/build
 
-systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth /build.sh
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth /bin/bash
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
 zfs destroy -r ${TARGET_FILESYSTEM} || exit 1

@@ -15,6 +15,8 @@ TIMESTAMP=$(date +%s)
 FILESYSTEM="${POOL}/serotina/root/${TIMESTAMP}"
 MOUNT_DIR=/tmp/serotina_root_${TIMESTAMP}
 
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 echo ""
 
 echo " ==> create filesystem:  ${FILESYSTEM}"
@@ -25,7 +27,10 @@ mkdir ${MOUNT_DIR} || exit 1
 mount -t zfs ${FILESYSTEM} ${MOUNT_DIR} || exit 1
 
 echo " ==> installing packages"
-pacstrap -c -d ${MOUNT_DIR} base base-devel || exit 1
+pacstrap -c -d ${MOUNT_DIR} base base-devel ccache || exit 1
+
+# Copy custom makepkg.conf
+cp ${SCRIPT_DIR}/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf || exit 1
 
 echo " ==> unmount filesystem: ${FILESYSTEM}"
 umount ${MOUNT_DIR} || exit 1
