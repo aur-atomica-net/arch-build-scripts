@@ -17,6 +17,11 @@ if [[ $POOL == "" ]]; then
    exit 1
 fi
 
+COMMAND=$2
+if [[ $COMMAND == "" ]]; then
+   COMMAND="/build.sh"
+fi
+
 TIMESTAMP=$(date +%s)
 RUN_SHA=$(echo -n "${pkgname}@${TIMESTAMP}" | sha256sum | awk '{print $1}')
 TARGET_FILESYSTEM="${POOL}/serotina/packages/${pkgname}/${RUN_SHA}"
@@ -58,7 +63,7 @@ chmod 755 ${MOUNT_DIR}/build.sh || exit 1
 # Persistent cache directory which will be set as the build users home directory
 mkdir -p /var/cache/build
 
-systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth /bin/bash
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth $COMMAND
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
 zfs destroy -r ${TARGET_FILESYSTEM} || exit 1
