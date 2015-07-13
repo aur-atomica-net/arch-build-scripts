@@ -49,7 +49,7 @@ zfs set mountpoint=${MOUNT_DIR} ${TARGET_FILESYSTEM} || exit 1
 
 cat <<EOT >> ${MOUNT_DIR}/etc/pacman.conf
 [atomica]
-Server = http://aur.atomica.net/$repo/$arch
+Server = http://aur.atomica.net/\$repo/\$arch
 SigLevel = Never
 EOT
 
