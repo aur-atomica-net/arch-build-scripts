@@ -47,12 +47,6 @@ MOUNT_DIR="/tmp/${RUN_SHA}"
 echo " ==> mount filesystem:   ${TARGET_FILESYSTEM} to ${MOUNT_DIR}"
 zfs set mountpoint=${MOUNT_DIR} ${TARGET_FILESYSTEM} || exit 1
 
-cat <<EOT >> ${MOUNT_DIR}/etc/pacman.conf
-[atomica]
-Server = http://aur.atomica.net/\$repo/\$arch
-SigLevel = Never
-EOT
-
 cat /etc/resolv.conf > ${MOUNT_DIR}/etc/resolv.conf
 echo "%wheel ALL=(ALL) NOPASSWD: ALL" > ${MOUNT_DIR}/etc/sudoers
 

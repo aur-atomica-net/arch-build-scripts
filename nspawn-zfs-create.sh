@@ -29,6 +29,14 @@ mount -t zfs ${FILESYSTEM} ${MOUNT_DIR} || exit 1
 echo " ==> installing packages"
 pacstrap -c -d ${MOUNT_DIR} base base-devel ccache || exit 1
 
+# Add aur.atomica.net repo
+cat <<EOT >> ${MOUNT_DIR}/etc/pacman.conf
+[atomica]
+Server = http://aur.atomica.net/\$repo/\$arch
+EOT
+mkdir -p ${MOUNT_DIR}/root/.gnupg
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 5EF75572 && pacman-key --lsign-key 5EF75572' || exit 1
+
 # Copy custom makepkg.conf
 cp ${SCRIPT_DIR}/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf || exit 1
 
