@@ -16,7 +16,7 @@ if [[ -f ./pre_build.sh ]]; then
     ./pre_build.sh || exit 1
 fi
 
-sudo -u build makepkg --force --noconfirm --syncdeps || exit 1
+sudo -u build makepkg --force --noconfirm --syncdeps --sign || exit 1
 
 if [[ -f ./post_build.sh ]]; then
     chmod 755 ./post_build.sh
