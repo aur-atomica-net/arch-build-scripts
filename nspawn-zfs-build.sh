@@ -32,7 +32,7 @@ echo ""
 echo " ==> Package name:       ${pkgname}"
 echo " ==> target file system: ${TARGET_FILESYSTEM}"
 
-MOST_RECENT_ROOT=$(zfs list -r ${POOL}/serotina/root | sort | sed 1d | head -n1 | awk '{print $1}')
+MOST_RECENT_ROOT=$(zfs list -r ${POOL}/serotina/root | sort -r | sed 1d | head -n1 | awk '{print $1}')
 echo " ==> root container:     ${MOST_RECENT_ROOT}"
 
 ROOT_SNAPSHOT="${MOST_RECENT_ROOT}@${RUN_SHA}"
