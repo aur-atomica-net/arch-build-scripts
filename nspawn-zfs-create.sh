@@ -30,10 +30,7 @@ echo " ==> installing packages"
 pacstrap -c -d ${MOUNT_DIR} base base-devel ccache || exit 1
 
 # Add aur.atomica.net repo
-cat <<EOT >> ${MOUNT_DIR}/etc/pacman.conf
-[atomica]
-Server = http://aur.atomica.net/\$repo/\$arch
-EOT
+cp ${SCRIPT_DIR}/pacman.conf ${MOUNT_DIR}/etc/pacman.conf
 mkdir -p ${MOUNT_DIR}/root/.gnupg
 systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 5EF75572 && pacman-key --lsign-key 5EF75572' || exit 1
 
