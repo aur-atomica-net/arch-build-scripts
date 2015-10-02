@@ -11,9 +11,9 @@ chown -R build:users /build
 
 cd /build
 
-sudo -u build mkdir -p .gnupg
-sudo -u build echo 'keyserver hkp://pool.sks-keyservers.net' > .gnupg/gpg.conf
-sudo -u build echo 'keyserver-options auto-key-retrieve' >> .gnupg/gpg.conf
+sudo -u build mkdir -p /home/build/.gnupg
+sudo -u build echo 'keyserver hkp://pool.sks-keyservers.net' > /home/build/.gnupg/gpg.conf
+sudo -u build echo 'keyserver-options auto-key-retrieve' >> /home/build/.gnupg/gpg.conf
 
 if [[ -f ./pre_build.sh ]]; then
     chmod 755 ./pre_build.sh
