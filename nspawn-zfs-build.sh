@@ -57,7 +57,7 @@ chmod 755 ${MOUNT_DIR}/build.sh || exit 1
 # Persistent cache directory which will be set as the build users home directory
 mkdir -p /var/cache/build
 
-systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth $COMMAND
+systemd-nspawn --directory=${MOUNT_DIR} --machine=${pkgname}-${RANDOM} --bind=/var/cache/pacman --bind=/var/cache/build:/home/build --bind=$(pwd):/build --network-veth $COMMAND
 
 echo " ==> destroy ${TARGET_FILESYSTEM}"
 zfs destroy -r ${TARGET_FILESYSTEM} || exit 1
