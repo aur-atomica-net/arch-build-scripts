@@ -33,6 +33,7 @@ pacstrap -c -d ${MOUNT_DIR} base base-devel ccache || exit 1
 cp ${SCRIPT_DIR}/pacman.conf ${MOUNT_DIR}/etc/pacman.conf
 mkdir -p ${MOUNT_DIR}/root/.gnupg
 systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 5EF75572 && pacman-key --lsign-key 5EF75572' || exit 1
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 0x4466fcf875b1e1ac && pacman-key --lsign-key 0x4466fcf875b1e1ac' || exit 1
 
 # Copy custom makepkg.conf
 cp ${SCRIPT_DIR}/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf || exit 1
