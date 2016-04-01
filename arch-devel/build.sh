@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t atomica/arch-devel .
+docker build --force-rm --tag atomica/arch-devel .
