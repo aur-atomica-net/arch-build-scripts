@@ -10,7 +10,7 @@ IMAGE_NAME="arch-base"
 TARGET_DIR="tmp/${IMAGE_NAME}"
 
 rm -rf "tmp"
-mkdir "${TARGET_DIR}"
+mkdir -p "${TARGET_DIR}"
 
 pacstrap -c -G -d ${TARGET_DIR} base || exit 1
 
