@@ -1,3 +1,5 @@
+#!groovy
+
 stage 'build arch-base'
 node {
     stage 'checkout'
