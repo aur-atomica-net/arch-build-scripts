@@ -3,7 +3,7 @@
 stage 'arch-base'
 node {
     checkout scm
-    dir 'arch-base' {
+    dir('arch-base') {
         sh 'sudo ./build.sh'
     }
 }
@@ -11,7 +11,7 @@ node {
 stage 'arch-devel'
 node {
     checkout scm
-    dir 'arch-devel' {
+    dir('arch-devel') {
         sh 'sudo ./build.sh'
     }
 }
