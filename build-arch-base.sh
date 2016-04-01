@@ -13,6 +13,6 @@ mkdir "${IMAGE_NAME}"
 
 pacstrap -c -G -d ${IMAGE_NAME} base || exit 1
 
-tar -C ${IMAGE_NAME} -c . | docker import - "${IMAGE_NAME}:${TIMESTAMP}"
+tar -C ${IMAGE_NAME} -c . | docker import - "${IMAGE_NAME}:latest"
 
-docker tag "${IMAGE_NAME}:${TIMESTAMP}" "${IMAGE_NAME}:latest"
+# docker tag "${IMAGE_NAME}:${TIMESTAMP}" "${IMAGE_NAME}:latest"
