@@ -12,6 +12,6 @@ TARGET_DIR="tmp/${IMAGE_NAME}"
 rm -rf "tmp"
 mkdir -p "${TARGET_DIR}"
 
-pacstrap -c -d ${TARGET_DIR} base || exit 1
+pacstrap -c -G -d ${TARGET_DIR} base || exit 1
 
 tar -C ${TARGET_DIR} -c . | docker import - "${IMAGE_PREFIX}${IMAGE_NAME}:latest"
