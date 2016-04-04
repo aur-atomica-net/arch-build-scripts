@@ -36,7 +36,7 @@ systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pac
 systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 0x4466fcf875b1e1ac && pacman-key --lsign-key 0x4466fcf875b1e1ac' || exit 1
 
 # Copy custom makepkg.conf
-cp ${SCRIPT_DIR}/arch-devel/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf || exit 1
+# cp ${SCRIPT_DIR}/arch-devel/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf || exit 1
 
 echo " ==> unmount filesystem: ${FILESYSTEM}"
 umount ${MOUNT_DIR} || exit 1
