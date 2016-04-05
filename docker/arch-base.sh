@@ -1,9 +1,8 @@
 #!/bin/sh
-
-# Based on: http://hoverbear.org/2014/07/14/arch-docker-baseimage/
-
 set -e
 set -o pipefail
+
+# Based on: http://hoverbear.org/2014/07/14/arch-docker-baseimage/
 
 # Setup DNS
 echo 'nameserver 8.8.8.8' > /etc/resolv.conf

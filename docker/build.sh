@@ -1,9 +1,8 @@
 #!/bin/sh
-
 set -e
 set -o pipefail
 
-IMAGE_NAME="atomica/arch-base"
+BASE_IMAGE_NAME="atomica/arch"
 MIRROR="http://mirror.lty.me/archlinux"
 VERSION=$(curl ${MIRROR}/iso/latest/ | grep -Poh '(?<=archlinux-bootstrap-)\d*\.\d*\.\d*(?=\-x86_64)' | head -n 1)
 
@@ -24,8 +23,18 @@ gpg --verify "archlinux-bootstrap-${VERSION}-x86_64.tar.gz.sig" "archlinux-boots
 
 sudo rm -rf ./root.x86_64
 tar xf archlinux-bootstrap-$VERSION-x86_64.tar.gz
+
+## arch-base
 cp arch-init.sh ./root.x86_64/
-sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-base-${RANDOM} /bin/sh /arch-init.sh
+sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-base-${RANDOM} /bin/sh /arch-base.sh
 rm -f ./root.x86_64/arch-init.sh
 
-tar --numeric-owner -C root.x86_64 -c . | docker import - "${IMAGE_NAME}:latest"
+tar --numeric-owner -C root.x86_64 -c . | docker import - "${BASE_IMAGE_NAME}-base:latest"
+
+## arch-devel
+cp arch-devel.sh ./root.x86_64/
+cp pacman.conf ./root.x86_64/etc/pacman.conf
+sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-devel-${RANDOM} /bin/sh /arch-devel.sh
+rm -f ./root.x86_64/arch-devel.sh
+
+tar --numeric-owner -C root.x86_64 -c . | docker import - "${BASE_IMAGE_NAME}-devel:latest"

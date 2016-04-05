@@ -3,13 +3,8 @@
 node {
     checkout scm
 
-    stage 'arch-base'
-    dir('arch-base') {
-        sh 'sudo ./build.sh'
-    }
-
-    stage 'arch-devel'
-    dir('arch-devel') {
-        sh 'sudo ./build.sh'
+    stage 'Build Docker Images'
+    dir('docker') {
+        sh 'sudo /bin/sh ./build.sh'
     }
 }
