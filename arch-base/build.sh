@@ -28,4 +28,4 @@ cp arch-init.sh ./root.x86_64/
 sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-base-${RANDOM} /bin/sh /arch-init.sh
 rm -f ./root.x86_64/arch-init.sh
 
-tar --numeric-owner -C root.x86_64 -c . | docker import - "${IMAGE_NAME}:${VERSION}"
+tar --numeric-owner -C root.x86_64 -c . | docker import - "${IMAGE_NAME}:latest"
