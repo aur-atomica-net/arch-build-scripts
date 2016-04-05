@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -x
 set -o pipefail
 
 # Based on: http://hoverbear.org/2014/07/14/arch-docker-baseimage/

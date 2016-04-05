@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
+set -x
 set -o pipefail
+
 
 BASE_IMAGE_NAME="atomica/arch"
 MIRROR="http://mirror.lty.me/archlinux"

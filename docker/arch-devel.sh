@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -x
 set -o pipefail
 
 pacman-key -r 5EF75572 && pacman-key --lsign-key 5EF75572

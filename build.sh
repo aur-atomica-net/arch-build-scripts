@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+set -x
+set -o pipefail
 
 # This might not be required in the future
 dhcpcd host0
@@ -17,12 +20,12 @@ sudo -u build echo 'keyserver-options auto-key-retrieve' >> /home/build/.gnupg/g
 
 if [[ -f ./pre_build.sh ]]; then
     chmod 755 ./pre_build.sh
-    ./pre_build.sh || exit 1
+    ./pre_build.sh
 fi
 
-sudo -u build makepkg --force --noconfirm --syncdeps --sign --install --nocheck || exit 1
+sudo -u build makepkg --force --noconfirm --syncdeps --sign --install --nocheck
 
 if [[ -f ./post_build.sh ]]; then
     chmod 755 ./post_build.sh
-    ./post_build.sh || exit 1
+    ./post_build.sh
 fi

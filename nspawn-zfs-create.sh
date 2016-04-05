@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+set -x
+set -o pipefail
 
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root"
@@ -20,24 +23,24 @@ SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 echo ""
 
 echo " ==> create filesystem:  ${FILESYSTEM}"
-zfs create -p -o mountpoint=legacy ${FILESYSTEM} || exit 1
+zfs create -p -o mountpoint=legacy ${FILESYSTEM}
 
 echo " ==> mount filesystem:   ${FILESYSTEM}"
-mkdir ${MOUNT_DIR} || exit 1
-mount -t zfs ${FILESYSTEM} ${MOUNT_DIR} || exit 1
+mkdir ${MOUNT_DIR}
+mount -t zfs ${FILESYSTEM} ${MOUNT_DIR}
 
 echo " ==> installing packages"
-pacstrap -c -d ${MOUNT_DIR} base base-devel ccache || exit 1
+pacstrap -c -d ${MOUNT_DIR} base base-devel ccache
 
 # Add aur.atomica.net repo
 cp ${SCRIPT_DIR}/pacman.conf ${MOUNT_DIR}/etc/pacman.conf
 mkdir -p ${MOUNT_DIR}/root/.gnupg
-systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 5EF75572 && pacman-key --lsign-key 5EF75572' || exit 1
-systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 0x4466fcf875b1e1ac && pacman-key --lsign-key 0x4466fcf875b1e1ac' || exit 1
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 5EF75572 && pacman-key --lsign-key 5EF75572'
+systemd-nspawn --directory=${MOUNT_DIR} --bind=/var/cache/pacman /bin/sh -c 'pacman-key -r 0x4466fcf875b1e1ac && pacman-key --lsign-key 0x4466fcf875b1e1ac'
 
 # Copy current system makepkg.conf
-cp /etc/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf || exit 1
+cp /etc/makepkg.conf ${MOUNT_DIR}/etc/makepkg.conf
 
 echo " ==> unmount filesystem: ${FILESYSTEM}"
-umount ${MOUNT_DIR} || exit 1
-rmdir ${MOUNT_DIR} || exit 1
+umount ${MOUNT_DIR}
+rmdir ${MOUNT_DIR}
