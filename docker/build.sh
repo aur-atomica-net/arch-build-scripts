@@ -25,9 +25,9 @@ sudo rm -rf ./root.x86_64
 tar xf archlinux-bootstrap-$VERSION-x86_64.tar.gz
 
 ## arch-base
-cp arch-init.sh ./root.x86_64/
+cp arch-base.sh ./root.x86_64/
 sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-base-${RANDOM} /bin/sh /arch-base.sh
-rm -f ./root.x86_64/arch-init.sh
+rm -f ./root.x86_64/arch-base.sh
 
 tar --numeric-owner -C root.x86_64 -c . | docker import - "${BASE_IMAGE_NAME}-base:latest"
 
