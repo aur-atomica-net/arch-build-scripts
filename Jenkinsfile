@@ -19,13 +19,12 @@ node {
     //     devel.push()
     // }
 
-    stage 'Push to docker.artfire.me'
     docker.withRegistry('https://docker.artfire.me/', 'docker-artfire') {
-        stage 'Push arch-base'
+        stage 'Push docker.artfire.me/atomica/arch-base'
         def base = docker.image('atomica/arch-base')
         base.push()
 
-        stage 'Push arch-devel'
+        stage 'Push docker.artfire.me/atomica/arch-devel'
         def devel = docker.image('atomica/arch-devel')
         devel.push()
     }
