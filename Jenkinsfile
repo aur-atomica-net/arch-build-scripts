@@ -1,12 +1,12 @@
 #!groovy
 
 node {
-    // checkout scm
+    checkout scm
 
-    // dir('docker') {
-    //     stage 'Build Images'
-    //     sh 'sudo /bin/sh ./build.sh'
-    // }
+    dir('docker') {
+        stage 'Build Images'
+        sh 'sudo /bin/sh ./build.sh'
+    }
 
     stage 'Push to docker.artfire.me'
     docker.withRegistry('https://index.docker.io/v1/', 'docker-jasonrm') {
