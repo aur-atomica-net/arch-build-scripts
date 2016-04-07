@@ -16,13 +16,8 @@ echo 'Server = http://mirror.lty.me/archlinux/$repo/os/$arch' > /etc/pacman.d/mi
 pacman-key --init
 pacman-key --populate archlinux
 
-# Add aur.atomica.net
+# Add key for aur.atomica.net
 pacman-key -r 0x4466fcf875b1e1ac && pacman-key --lsign-key 0x4466fcf875b1e1ac
-cat >> /etc/pacman.conf <<DELIM
-[atomica]
-Server = http://aur.atomica.net/\$repo/\$arch
-SigLevel = Never
-DELIM
 
 # Base without the following packages, to save space.
 # linux jfsutils lvm2 cryptsetup groff man-db man-pages mdadm pciutils pcmciautils reiserfsprogs s-nail xfsprogs vi

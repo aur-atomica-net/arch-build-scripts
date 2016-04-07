@@ -28,6 +28,7 @@ tar xf archlinux-bootstrap-$VERSION-x86_64.tar.gz
 
 ## arch-base
 cp arch-base.sh ./root.x86_64/
+cp pacman.conf ./root.x86_64/etc/pacman.conf
 sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-base-${RANDOM} /bin/sh /arch-base.sh
 rm -f ./root.x86_64/arch-base.sh
 
@@ -35,7 +36,6 @@ tar --numeric-owner -C root.x86_64 -c . | docker import - "${BASE_IMAGE_NAME}-ba
 
 ## arch-devel
 cp arch-devel.sh ./root.x86_64/
-cp pacman.conf ./root.x86_64/etc/pacman.conf
 sudo systemd-nspawn --directory=$(pwd)/root.x86_64 --bind=/var/cache/pacman --machine=arch-devel-${RANDOM} /bin/sh /arch-devel.sh
 rm -f ./root.x86_64/arch-devel.sh
 
