@@ -6,7 +6,8 @@ set -o pipefail
 # This might not be required in the future
 dhcpcd host0
 
-pacman --sync --sysupgrade --refresh --noconfirm
+pacman --sync --refresh --noconfirm archlinux-keyring
+pacman --sync --sysupgrade --noconfirm
 
 useradd -g users -G wheel -s /bin/bash build
 mkdir -p /home/build && chown -R build:users /home/build
