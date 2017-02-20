@@ -19,6 +19,9 @@ sudo -u build mkdir -p /home/build/.gnupg
 sudo -u build echo 'keyserver hkp://pool.sks-keyservers.net' > /home/build/.gnupg/gpg.conf
 sudo -u build echo 'keyserver-options auto-key-retrieve' >> /home/build/.gnupg/gpg.conf
 
+# https://github.com/niemeyer/gopkg/issues/50
+sudo -u build git config --global http.https://gopkg.in.followRedirects true
+
 if [[ -f ./pre_build.sh ]]; then
     chmod 755 ./pre_build.sh
     ./pre_build.sh
